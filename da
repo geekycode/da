@@ -1,3 +1,8 @@
+//Alcatuire grupa:
+// Ilie Eduard 324CC
+// Velea Alexandru 324CC 
+// Nistor Razvan 324CC
+
 import java.io.*;
 import java.util.*;
 import java.text.*;
@@ -5,7 +10,7 @@ import java.math.*;
 import java.util.regex.*;
 
 public class Solution {
-  /* Head ends here */
+	/* Head ends here */
 	static void nextMove(String player, int[] pos, String[] board) {
 		int current_line, current_col, enemy_line, enemy_col;
 		String[][] Map = new String[50][50];
@@ -26,8 +31,8 @@ public class Solution {
 			enemy_col = pos[1];
 		}
 
-		board_lines = board.length;
-		board_cols = board[1].length();
+		board_lines = board.length;// retin numarul liniilor din harta
+		board_cols = board[1].length();// retin numarul coloanelor din harta
 		// pun harta intr-o matrice
 		for (i = 0; i < board_lines; i++) {
 			String a = board[i];
@@ -35,37 +40,40 @@ public class Solution {
 				Map[i][j] = a.substring(j, j + 1);
 			}
 		}
-		contor_down = 0;
+		contor_down = 0;// verific numarul de casute libere in jos
 		for (i = current_line; i < board_lines; i++)
 			if (Map[i + 1][current_col].equals("-"))
 				contor_down++;
 			else
 				break;
 
-		contor_up = 0;
+		contor_up = 0;// verific numarul de casute libere in sus
 		for (i = current_line; i > 2; i--)
 			if (Map[i - 1][current_col].equals("-"))
 				contor_up++;
 			else
 				break;
 
-		contor_right = 0;
+		contor_right = 0;// verific numarul de casute libere in dreapta
 		for (i = current_col; i < board_cols; i++)
 			if (Map[current_line][i + 1].equals("-"))
 				contor_right++;
 			else
 				break;
 
-		contor_left = 0;
-		for (i = current_col; i >2; i--)
+		contor_left = 0;// verific numarul de casute libere in stanga
+		for (i = current_col; i > 2; i--)
 			if (Map[current_line][i - 1].equals("-"))
 				contor_left++;
 			else
 				break;
 
 		BEST = Math.max(Math.max(contor_up, contor_down),
-				Math.max(contor_left, contor_right));
+				Math.max(contor_left, contor_right));// aleg directia in care am
+														// cele mai multe casute
+														// libere
 
+		// afisez directia in care am cele mai multe casute libere
 		if (BEST == contor_up)
 			System.out.println("UP");
 		else if (BEST == contor_down)
