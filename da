@@ -1,0 +1,108 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+  /* Head ends here */
+	static void nextMove(String player, int[] pos, String[] board) {
+		int current_line, current_col, enemy_line, enemy_col;
+		String[][] Map = new String[50][50];
+		int i, j;
+		int contor_down, contor_up, contor_left, contor_right;
+		int board_lines, board_cols;
+		int BEST;
+		// verific daca sunt primul jucator
+		if (player.equals("r")) {
+			current_line = pos[0];
+			current_col = pos[1];
+			enemy_line = pos[2];
+			enemy_col = pos[3];
+		} else {
+			current_line = pos[2];
+			current_col = pos[3];
+			enemy_line = pos[0];
+			enemy_col = pos[1];
+		}
+
+		board_lines = board.length;
+		board_cols = board[1].length();
+		// pun harta intr-o matrice
+		for (i = 0; i < board_lines; i++) {
+			String a = board[i];
+			for (j = 0; j < board[i].length(); j++) {
+				Map[i][j] = a.substring(j, j + 1);
+			}
+		}
+		contor_down = 0;
+		for (i = current_line; i < board_lines; i++)
+			if (Map[i + 1][current_col].equals("-"))
+				contor_down++;
+			else
+				break;
+
+		contor_up = 0;
+		for (i = current_line; i > 2; i--)
+			if (Map[i - 1][current_col].equals("-"))
+				contor_up++;
+			else
+				break;
+
+		contor_right = 0;
+		for (i = current_col; i < board_cols; i++)
+			if (Map[current_line][i + 1].equals("-"))
+				contor_right++;
+			else
+				break;
+
+		contor_left = 0;
+		for (i = current_col; i >2; i--)
+			if (Map[current_line][i - 1].equals("-"))
+				contor_left++;
+			else
+				break;
+
+		BEST = Math.max(Math.max(contor_up, contor_down),
+				Math.max(contor_left, contor_right));
+
+		if (BEST == contor_up)
+			System.out.println("UP");
+		else if (BEST == contor_down)
+			System.out.println("DOWN");
+		else if (BEST == contor_left)
+			System.out.println("LEFT");
+		else
+			System.out.println("RIGHT");
+
+	}
+
+	/* Tail starts here */
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		in.useDelimiter("\n");
+		String player = in.next();
+		String pos = in.next();
+		String[] str_pos = pos.split(" ");
+		int[] position = new int[4];
+		int[] sizes = new int[2];
+		System.out.println();
+
+		for (int i = 0; i < 4; i++) {
+			position[i] = Integer.parseInt(str_pos[i]);
+		}
+		pos = in.next();
+		str_pos = pos.split(" ");
+		for (int i = 0; i < 2; i++) {
+			sizes[i] = Integer.parseInt(str_pos[i]);
+		}
+
+		String board[] = new String[sizes[0]];
+
+		for (int i = 0; i < sizes[0]; i++) {
+			board[i] = in.next();
+		}
+
+		nextMove(player, position, board);
+	}
+}
